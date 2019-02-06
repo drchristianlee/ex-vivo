@@ -1,0 +1,5 @@
+1. Run train stim on data
+2. Copy keepers for each cell to a new folder
+3. Run train stim average on that folder
+4. Copy the resulting holder file to a new folder and run train stim statistics on that folder
+5. Copy file (not holder) to a new folder and use train stim traces to plot data
