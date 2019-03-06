@@ -9,7 +9,7 @@ load(file);
 
 
 NaNtrace = [];%enter any sweeps that should be changed to NaN values
-filtered = 1; %set to 1 if data was filtered for analysis
+filtered = 0; %set to 1 if data was filtered for analysis
 
 if filtered == 1;
     sorted_data = sorted_data_unfilt;
