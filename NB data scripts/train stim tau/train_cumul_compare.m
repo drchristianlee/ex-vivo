@@ -51,7 +51,7 @@ end
 errorbar(barkeeper(1,:), barkeeper(2,:), '.', 'color', 'k', 'marker', 'none');
 
 
- axis([0 4 0 10000])
+ axis([0 4 0 7000])
  set(gca,'TickDir','out')
  set(gca, 'box', 'off')
  set(gcf,'position',[680 558 200 410])
