@@ -1,4 +1,4 @@
-% use this script to analyze cumulative normalized psp data
+% use this script to plot cumulative normalized psp data
 
 clear;
 folder = uigetdir;
