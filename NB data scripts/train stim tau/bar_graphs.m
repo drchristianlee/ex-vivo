@@ -2,7 +2,7 @@
 % for a single comparison (from master spreadsheet) as column vectors. Save this variable
 % as *.mat as appropriate. Then run this script, choosing the
 % correct file name in the line indicated below. Also set test to paired or
-% unpaired and set scale to 1 true or 0 false. 
+% unpaired. 
 
 clear;
 close all
@@ -40,7 +40,7 @@ end
  axis([0 3 0 7000])
  set(gca,'TickDir','out')
  set(gca, 'box', 'off')
- set(gcf,'position',[680 558 160 210])
+ set(gcf,'position',[680 558 160 220])
  set(gca, 'TickLength', [0.025 0.025]);
  set(gca,'FontSize',9);
  
