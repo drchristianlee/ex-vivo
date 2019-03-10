@@ -8,16 +8,14 @@ clear;
 close all
 clc
 
-load('spn_test_keeper.mat')
 test = 2; %enter 1 for paired test and 2 for unpaired test
-scale = 0; %enter 1 to scale data by 1000 else 0
+
+
+folder = uigetdir;
+cd(folder);
+load('test_keeper.mat')
 
 test_keeper(test_keeper == 0) = NaN;
-
-if scale == 1;
-    test_keeper = test_keeper * 1000;
-else
-end
 
 barkeeper(1,1) = nanmean(test_keeper(:,1));
 barkeeper(1,2) = nanmean(test_keeper(:, 2));
@@ -39,7 +37,7 @@ for points = 1:size(test_keeper, 1);
     hold on
 end
 
- axis([0 3 0 40])
+ axis([0 3 0 7000])
  set(gca,'TickDir','out')
  set(gca, 'box', 'off')
  set(gcf,'position',[680 558 160 210])
