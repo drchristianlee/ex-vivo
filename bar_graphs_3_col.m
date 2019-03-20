@@ -10,7 +10,7 @@ clc
 [path] = uigetdir;
 cd(path);
 
-load('S1.mat') %choose which file to load
+load('M1.mat') %choose which file to load
 
 test_keeper(test_keeper == 0) = NaN;
 
