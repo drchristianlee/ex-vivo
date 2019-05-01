@@ -11,7 +11,7 @@ clc
 [path] = uigetdir;
 cd(path);
 
-load('pv_test_keeper.mat')
+load('test_keeper.mat')
 test = 2; %enter 1 for paired test and 2 for unpaired test
 scale = 0; %enter 1 to scale data by 1000 else 0
 
