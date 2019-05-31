@@ -6,8 +6,8 @@ load(file);
 
 vars = whos;
 
-cell = 1;
-manipulation = 1;
+cell = 2;
+manipulation = 4;
 
 for findcell = 1:size(vars, 1);
     if str2num(vars(findcell, 1).name(7)) == cell && str2num(vars(findcell, 1).name(9)) == manipulation;
@@ -22,7 +22,7 @@ for findcell = 1:size(vars, 1);
     end
 end
 
-NaNtrace = [1 2 4 5 6 7 8 10 11]; %enter any sweeps that should be changed to NaN values
+NaNtrace = []; %enter any sweeps that should be changed to NaN values
 
 sorted_data = data(:, 3:11);
 sorted_data = [sorted_data data(:, 1:2)];
