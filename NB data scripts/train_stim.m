@@ -13,8 +13,8 @@ clear file path newdir
 
 vars = whos;
 
-cell = 3;
-manipulation = 3;
+cell = 1;
+manipulation = 4;
 NaNtrace = []; %enter any sweeps that should be changed to NaN values
 filter = 0; %0 for no filter, 1 for filter. Use filter if action potentials are present and can't be changed to NaN
 fc = 30; 
