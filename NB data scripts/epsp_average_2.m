@@ -14,9 +14,9 @@ clear file path newdir
 
 vars = whos;
 
-cell = 2;
+cell = 1;
 manipulation = 3;
-NaNtrace = []; %enter any sweeps that should be changed to NaN values
+NaNtrace = [3 10 16]; %enter any sweeps that should be changed to NaN values
 
 
 for findcell = 1:size(vars, 1);
