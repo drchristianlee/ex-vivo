@@ -15,7 +15,7 @@ for findcell = 1:size(vars, 1);
         holdstepper = findcell;
         for savetrace = 1:11;
             holder = eval(vars(holdstepper, 1).name);
-            data(:, savetrace) = holder(:, 2);
+            data(:, savetrace) = {holder}; %was holder(:, 2);
             holdstepper = holdstepper + 1;
         end
         break
@@ -28,7 +28,7 @@ sorted_data = [sorted_data data(:, 1:2)];
 
 if isempty(NaNtrace) == 0;
     for correctval = 1:size(NaNtrace, 2);
-        sorted_data(:, NaNtrace(1, correctval)) = NaN;
+        sorted_data{1, NaNtrace(1, correctval)}(:, 2) = NaN;
     end
 else
 end
@@ -40,7 +40,7 @@ for plot_step = 1:size(sorted_data, 2)
     hold on
 end
 
-axis([0 8995 -0.15 0.060]) %this can be modified to make plot more attractive
+axis([0 18000 -0.15 0.060]) %this can be modified to make plot more attractive
 set(gca,'TickDir','out')
 set(gca, 'TickLength', [0.025 0.025]);
 set(gca, 'box', 'off')
