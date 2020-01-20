@@ -36,11 +36,11 @@ end
 figure
 
 for plot_step = 1:size(sorted_data, 2)
-    plot(sorted_data(:, plot_step));
+    plot(sorted_data{1,plot_step}(:,1) , sorted_data{1,plot_step}(:,2));
     hold on
 end
 
-axis([0 18000 -0.15 0.060]) %this can be modified to make plot more attractive
+axis([0 1 -0.15 0.075]) %this can be modified to make plot more attractive
 set(gca,'TickDir','out')
 set(gca, 'TickLength', [0.025 0.025]);
 set(gca, 'box', 'off')
