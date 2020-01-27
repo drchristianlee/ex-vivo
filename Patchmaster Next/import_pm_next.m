@@ -1,3 +1,5 @@
+% Use this script when importing from exported mat files
+
 clear;
 close all
 [file, path] = uigetfile('*.mat');
