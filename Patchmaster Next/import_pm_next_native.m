@@ -9,8 +9,8 @@ clear;
 close all
 
 cell = str2num(cell2mat(inputdlg('Please enter the cell you would like to plot data from')));
-% manipulation = str2num(cell2mat(inputdlg('Please enter the manipulation you would like to plot')));
-% NaNtrace = str2num(cell2mat(inputdlg('Please enter any sweeps to change to NaN or else leave empty')));
+manipulation = str2num(cell2mat(inputdlg('Please enter the manipulation you would like to plot')));
+NaNtrace = str2num(cell2mat(inputdlg('Please enter any sweeps to change to NaN or else leave empty')));
 HEKA_Importer.GUI
 
 for protocols = 1:size(ans.RecTable, 1);
@@ -23,10 +23,12 @@ end
 
 manipulation = (manipulation - 1) + protocols;
 
-time_vector = 0:0.05:900;
+time_vector = 0:0.05:899.995; %hard coded at the present
 
-
-
+for sweep = 1:size(ans.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
+    plot(time_vector , ans.RecTable.dataRaw{manipulation, 1}{1,1}(:, sweep));
+    hold on
+end
 % 
 % if isempty(NaNtrace) == 0;
 %     for correctval = 1:size(NaNtrace, 2);
