@@ -8,31 +8,23 @@
 clear;
 close all
 
-HEKA_Importer.GUI
-
-
-
-% vars = whos;
-% 
-% cell = str2num(cell2mat(inputdlg('Please enter the cell you would like to plot data from')));
+cell = str2num(cell2mat(inputdlg('Please enter the cell you would like to plot data from')));
 % manipulation = str2num(cell2mat(inputdlg('Please enter the manipulation you would like to plot')));
 % NaNtrace = str2num(cell2mat(inputdlg('Please enter any sweeps to change to NaN or else leave empty')));
-% 
-% for findcell = 1:size(vars, 1);
-%     if str2num(vars(findcell, 1).name(7)) == cell && str2num(vars(findcell, 1).name(9)) == manipulation;
-%         holdstepper = findcell;
-%         for savetrace = 1:11;
-%             holder = eval(vars(holdstepper, 1).name);
-%             data(:, savetrace) = {holder}; %was holder(:, 2);
-%             holdstepper = holdstepper + 1;
-%         end
-%         break
-%     else
-%     end
-% end
-% 
-% sorted_data = data(:, 3:11);
-% sorted_data = [sorted_data data(:, 1:2)];
+HEKA_Importer.GUI
+
+for protocols = 1:size(ans.RecTable, 1);
+    if ans.RecTable{protocols, 1} == cell;
+        break
+    else
+    end
+    
+end
+
+manipulation = manipulation + protocols;
+
+
+
 % 
 % if isempty(NaNtrace) == 0;
 %     for correctval = 1:size(NaNtrace, 2);
