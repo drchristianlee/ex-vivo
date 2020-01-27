@@ -8,6 +8,8 @@
 clear;
 close all
 
+HEKA_Importer.GUI
+
 
 
 % vars = whos;
