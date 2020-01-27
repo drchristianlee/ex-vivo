@@ -21,7 +21,9 @@ for protocols = 1:size(ans.RecTable, 1);
     
 end
 
-manipulation = manipulation + protocols;
+manipulation = (manipulation - 1) + protocols;
+
+time_vector = 0:0.05:900;
 
 
 
