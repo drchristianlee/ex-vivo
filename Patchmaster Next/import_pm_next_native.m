@@ -26,9 +26,16 @@ manipulation = (manipulation - 1) + protocols;
 time_vector = 0:0.05:899.995; %hard coded at the present
 
 for sweep = 1:size(ans.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
+    subplot(2,1,1);
     plot(time_vector , ans.RecTable.dataRaw{manipulation, 1}{1,1}(:, sweep));
     hold on
+    subplot(2,1,2);
+    plot(time_vector , ans.RecTable.stimWave{manipulation, 1}.DA_3(:, sweep));
+    hold on
 end
+
+
+
 % 
 % if isempty(NaNtrace) == 0;
 %     for correctval = 1:size(NaNtrace, 2);
@@ -36,13 +43,7 @@ end
 %     end
 % else
 % end
-% 
-% figure
-% 
-% for plot_step = 1:size(sorted_data, 2)
-%     plot(sorted_data{1,plot_step}(:,1) , sorted_data{1,plot_step}(:,2));
-%     hold on
-% end
+%
 % 
 % axis([0 1 -0.15 0.075]) %this can be modified to make plot more attractive
 % set(gca,'TickDir','out')
