@@ -32,6 +32,7 @@ for sweep = 1:size(ans.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
     subplot(2,1,2);
     plot(time_vector , ans.RecTable.stimWave{manipulation, 1}.DA_3(:, sweep));
     hold on
+    axis([0 900 -2 2])
 end
 
 
