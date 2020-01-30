@@ -25,6 +25,13 @@ manipulation = (manipulation - 1) + protocols;
 
 time_vector = 0:0.05:899.995; %hard coded at the present
 
+if isempty(NaNtrace) == 0;
+    for correctval = 1:size(NaNtrace, 2);
+        sorted_data{1, NaNtrace(1, correctval)}(:, 2) = NaN;
+    end
+else
+end
+
 for sweep = 1:size(ans.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
     subplot(2,1,1);
     plot(time_vector , ans.RecTable.dataRaw{manipulation, 1}{1,1}(:, sweep));
@@ -37,15 +44,6 @@ end
 
 
 
-% 
-% if isempty(NaNtrace) == 0;
-%     for correctval = 1:size(NaNtrace, 2);
-%         sorted_data{1, NaNtrace(1, correctval)}(:, 2) = NaN;
-%     end
-% else
-% end
-%
-% 
 % axis([0 1 -0.15 0.075]) %this can be modified to make plot more attractive
 % set(gca,'TickDir','out')
 % set(gca, 'TickLength', [0.025 0.025]);
