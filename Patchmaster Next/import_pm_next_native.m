@@ -27,7 +27,7 @@ time_vector = 0:0.05:899.995; %hard coded at the present
 
 if isempty(NaNtrace) == 0;
     for correctval = 1:size(NaNtrace, 2);
-        sorted_data{1, NaNtrace(1, correctval)}(:, 2) = NaN;
+        ans.RecTable.dataRaw{manipulation, 1}{1,1}(1:end, NaNtrace(1,correctval)) = NaN;
     end
 else
 end
