@@ -33,23 +33,25 @@ else
 end
 
 for sweep = 1:size(ans.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
-    subplot(2,1,1);
+    ax1 = subplot(2,1,1);
     plot(time_vector , ans.RecTable.dataRaw{manipulation, 1}{1,1}(:, sweep));
     hold on
-    subplot(2,1,2);
+    axis tight
+    ax2 = subplot(2,1,2);
     plot(time_vector , ans.RecTable.stimWave{manipulation, 1}.DA_3(:, sweep));
     hold on
     axis([0 900 -2 2])
 end
 
-
-
-% axis([0 1 -0.15 0.075]) %this can be modified to make plot more attractive
-% set(gca,'TickDir','out')
-% set(gca, 'TickLength', [0.025 0.025]);
-% set(gca, 'box', 'off')
-% set(gcf,'position',[680 558 280 210]);
-% set(gca,'FontSize',9);
+set(ax1,'TickDir','out')
+set(ax2,'TickDir','out')
+set(ax1, 'TickLength', [0.025 0.025]);
+set(ax2, 'TickLength', [0.025 0.025]);
+set(ax1, 'box', 'off')
+set(ax2, 'box', 'off')
+set(gcf,'position',[1100 470 310 410]);
+set(ax1,'FontSize',9);
+set(ax2,'FontSize',9);
 % set(gcf, 'renderer' , 'Painters');
 
 %to save figure in high resolution format
