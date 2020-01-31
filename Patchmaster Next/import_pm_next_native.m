@@ -11,7 +11,8 @@ close all
 cell = str2num(cell2mat(inputdlg('Please enter the cell you would like to plot data from')));
 manipulation = str2num(cell2mat(inputdlg('Please enter the manipulation you would like to plot')));
 NaNtrace = str2num(cell2mat(inputdlg('Please enter any sweeps to change to NaN or else leave empty')));
-HEKA_Importer.GUI
+
+HEKA_Importer.GUI %runs importer
 
 for protocols = 1:size(ans.RecTable, 1);
     if ans.RecTable{protocols, 1} == cell;
@@ -42,6 +43,12 @@ for sweep = 1:size(ans.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
     hold on
     axis([0 900 -2 2])
 end
+
+[pks, locs, w, p] = findpeaks(ans.RecTable.dataRaw{10,1}{1,1}(:,10), 'MinPeakHeight' , 0); %hard coded for dev purposes also try integrating sampling rate
+figure
+plot(ans.RecTable.dataRaw{10,1}{1,1}(:,10))
+hold on
+plot(locs, pks, 'o');
 
 set(ax1,'TickDir','out')
 set(ax2,'TickDir','out')
