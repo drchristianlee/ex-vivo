@@ -44,7 +44,7 @@ for sweep = 1:size(ans.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
     axis([0 900 -2 2])
 end
 
-[pks, locs, w, p] = findpeaks(ans.RecTable.dataRaw{10,1}{1,1}(:,10), 'MinPeakHeight' , 0); %hard coded for dev purposes also try integrating sampling rate
+[pks, locs, w, p] = findpeaks(ans.RecTable.dataRaw{10,1}{1,1}(:,10), 'MinPeakHeight' , 0, 'MinPeakDistance', 5); %hard coded for dev purposes also try integrating sampling rate
 figure
 plot(ans.RecTable.dataRaw{10,1}{1,1}(:,10))
 hold on
