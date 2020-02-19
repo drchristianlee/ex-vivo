@@ -54,10 +54,21 @@ plot(locs, pks, 'o');
 %code to find resting membrane potential
 Vtrace = ans.RecTable.dataRaw{manipulation, 1}{1,1}(1000:2999, :);
 V_avg = mean(Vtrace, 1);
-V_mem = mean(V_avg, 2) * 100;
+V_mem = mean(V_avg, 2) * 1000;
 
-%code to find input resistance and plot IV curve
+%code to find and plot input resistance and plot IV curve
+for iv_step = 1:size(ans.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
+    I(iv_step, 1) = ans.RecTable.stimWave{manipulation, 1}.DA_3(6000, iv_step);
+    V(iv_step, 1) = ans.RecTable.dataRaw{manipulation, 1}{1,1}(6000, iv_step);
+end
 
+figure
+plot(I, V)
+
+%now compute input resistance from the smallest hyperpolarizing step
+Vir = (ans.RecTable.dataRaw{manipulation, 1}{1,1}(6000, 5) - ans.RecTable.dataRaw{manipulation, 1}{1,1}(2000, 5)) * 1000;
+Iir = (ans.RecTable.stimWave{manipulation, 1}.DA_3(6000, 5) - ans.RecTable.stimWave{manipulation, 1}.DA_3(2000, 5)) * 1000;
+Rin = Vir/Iir;
 
 
 set(ax1,'TickDir','out')
