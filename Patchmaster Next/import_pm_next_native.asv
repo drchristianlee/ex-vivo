@@ -69,8 +69,12 @@ figure
 plot(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,10))
 hold on
 plot(locs, pks, 'o');
-slope = diff(
+slope = diff(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,10));
 
+for spike = 1:size(locs, 1);
+    max_rise_slope = max(slope(locs(spike, 1) - 50: locs(spike, 1) + 50));
+    perc_max = max_rise_sloope * 0.15;
+    for check = 
 
 set(ax1,'TickDir','out')
 set(ax2,'TickDir','out')
