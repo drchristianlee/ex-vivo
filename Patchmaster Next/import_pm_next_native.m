@@ -44,14 +44,6 @@ for sweep = 1:size(ans.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
     axis([0 900 -2 2])
 end
 
-%code to find peaks and calculate action potential parameters
-%(developmental only)
-[pks, locs, w, p] = findpeaks(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,10), 'MinPeakHeight' , 0, 'MinPeakDistance', 5); %hard coded for dev purposes also try integrating sampling rate
-figure
-plot(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,10))
-hold on
-plot(locs, pks, 'o');
-
 %code to find resting membrane potential
 Vtrace = ans.RecTable.dataRaw{manipulation, 1}{1,1}(1000:2999, :);
 V_avg = mean(Vtrace, 1);
@@ -72,6 +64,11 @@ Iir = (ans.RecTable.stimWave{manipulation, 1}.DA_3(6000, 5) - ans.RecTable.stimW
 Rin = (Vir/Iir) / 1000000;
 
 %compute action potential parameters
+[pks, locs, w, p] = findpeaks(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,10), 'MinPeakHeight' , 0, 'MinPeakDistance', 5); %hard coded for dev purposes also try integrating sampling rate
+figure
+plot(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,10))
+hold on
+plot(locs, pks, 'o');
 
 
 
