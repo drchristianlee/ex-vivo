@@ -45,9 +45,10 @@ for sweep = 1:size(ans.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
 end
 
 %code to find peaks and calculate action potential parameters
-[pks, locs, w, p] = findpeaks(ans.RecTable.dataRaw{10,1}{1,1}(:,10), 'MinPeakHeight' , 0, 'MinPeakDistance', 5); %hard coded for dev purposes also try integrating sampling rate
+%(developmental only)
+[pks, locs, w, p] = findpeaks(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,10), 'MinPeakHeight' , 0, 'MinPeakDistance', 5); %hard coded for dev purposes also try integrating sampling rate
 figure
-plot(ans.RecTable.dataRaw{10,1}{1,1}(:,10))
+plot(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,10))
 hold on
 plot(locs, pks, 'o');
 
@@ -68,7 +69,10 @@ plot(I, V)
 %now compute input resistance from the smallest hyperpolarizing step
 Vir = (ans.RecTable.dataRaw{manipulation, 1}{1,1}(6000, 5) - ans.RecTable.dataRaw{manipulation, 1}{1,1}(2000, 5)) * 1000;
 Iir = (ans.RecTable.stimWave{manipulation, 1}.DA_3(6000, 5) - ans.RecTable.stimWave{manipulation, 1}.DA_3(2000, 5)) * 10^-6;
-Rin = Vir/Iir / 1000000;
+Rin = (Vir/Iir) / 1000000;
+
+%compute action potential parameters
+
 
 
 set(ax1,'TickDir','out')
