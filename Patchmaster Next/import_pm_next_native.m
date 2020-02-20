@@ -69,8 +69,10 @@ figure
 plot(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,10))
 hold on
 plot(locs, pks, 'o');
+slope = diff(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,10));
 
-
+for spike = 1:size(locs, 1);
+    
 
 set(ax1,'TickDir','out')
 set(ax2,'TickDir','out')
