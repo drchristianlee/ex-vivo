@@ -72,6 +72,14 @@ plot(locs, pks, 'o');
 slope = diff(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,10));
 
 for spike = 1:size(locs, 1);
+    max_rise_slope = max(slope(locs(spike, 1) - 50: locs(spike, 1) + 50));
+    perc_max = max_rise_sloope * 0.15;
+    for thresh_idx = locs(spike, 1) - 50: locs(spike, 1) + 50;
+        if slope(1, thresh_idx) > perc_max;
+            break
+        else
+        end
+    end
     
 
 set(ax1,'TickDir','out')
