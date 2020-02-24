@@ -69,9 +69,9 @@ figure
 plot(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,10))
 hold on
 plot(locs, pks, 'o');
-slope = diff(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,10));
+slope = diff(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,10)); %this uses the penultimate sweep, need to change if another sweep is desired
 
-for spike = 1:1%size(locs, 1);
+for spike = 1:size(locs, 1);
     max_rise_slope = max(slope(locs(spike, 1) - 50: locs(spike, 1) + 50));
     perc_max = max_rise_slope * 0.15;
     for thresh_idx = locs(spike, 1) - 50: locs(spike, 1) + 50;
@@ -80,7 +80,7 @@ for spike = 1:1%size(locs, 1);
         else
         end
     end
-    threshold = ans.RecTable.dataRaw{manipulation,1}{thresh_idx,10}
+    threshold(1, spike) = ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx,10)
 end
 
 set(ax1,'TickDir','out')
