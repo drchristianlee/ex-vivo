@@ -87,7 +87,6 @@ for spike = 1:1%size(locs, 1);
     half_width = (1/ans.RecTable.SR(manipulation)) * size(idx_1);
 end
 
-%now calculate the width at half amplitude
 
 set(ax1,'TickDir','out')
 set(ax2,'TickDir','out')
