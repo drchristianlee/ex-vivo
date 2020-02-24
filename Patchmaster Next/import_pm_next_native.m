@@ -64,23 +64,24 @@ Iir = (ans.RecTable.stimWave{manipulation, 1}.DA_3(6000, 5) - ans.RecTable.stimW
 Rin = (Vir/Iir) / 1000000;
 
 %compute action potential parameters
-[pks, locs, w, p] = findpeaks(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,10), 'MinPeakHeight' , 0, 'MinPeakDistance', 5); %hard coded for dev purposes also try integrating sampling rate
+[pks, locs, w, p] = findpeaks(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,10), 'MinPeakHeight' , 0, 'MinPeakDistance', 5); %hard coded for dev purposes, uses sweep 10 also try integrating sampling rate
 figure
 plot(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,10))
 hold on
 plot(locs, pks, 'o');
 slope = diff(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,10));
 
-for spike = 1:size(locs, 1);
+for spike = 1:1%size(locs, 1);
     max_rise_slope = max(slope(locs(spike, 1) - 50: locs(spike, 1) + 50));
-    perc_max = max_rise_sloope * 0.15;
+    perc_max = max_rise_slope * 0.15;
     for thresh_idx = locs(spike, 1) - 50: locs(spike, 1) + 50;
-        if slope(1, thresh_idx) > perc_max;
+        if slope(thresh_idx, 1) > perc_max;
             break
         else
         end
     end
-    
+    threshold = ans.RecTable.dataRaw{manipulation,1}{thresh_idx,10}
+end
 
 set(ax1,'TickDir','out')
 set(ax2,'TickDir','out')
