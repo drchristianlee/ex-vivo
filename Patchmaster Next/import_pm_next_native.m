@@ -83,7 +83,7 @@ for spike = 1:size(locs, 1);
     threshold(1, spike) = ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx,10)
     peak = max(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50,10))
     half_amp = peak - threshold(1, spike);
-    
+    idx_1 = find(
 end
 
 %now calculate the width at half amplitude
