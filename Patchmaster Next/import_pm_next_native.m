@@ -87,6 +87,10 @@ for spike = 1:size(locs, 1);
     half_width(1, spike) = (1/ans.RecTable.SR(manipulation)) * size(idx_1, 1);
 end
 
+result.Rin = Rin;
+result.V_mem = V_mem;
+result.threshold = threshold;
+
 
 
 set(ax1,'TickDir','out')
