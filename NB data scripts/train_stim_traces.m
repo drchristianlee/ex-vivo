@@ -11,6 +11,8 @@ load(file);
 NaNtrace = [];%enter any sweeps that should be changed to NaN values
 filtered = 0; %set to 1 if data was filtered for analysis
 
+zoom = str2num(cell2mat(inputdlg('Use zoom view? 1 for yes 0 for no')));
+
 if filtered == 1;
     sorted_data = sorted_data_unfilt;
 else
@@ -35,13 +37,23 @@ end
 plot(avg_trace, 'k');
 
 set(gcf, 'renderer' , 'Painters');
-axis([35000 85000 -0.09 -0.04]); %orig this can be modified to make plot more attractive
-%axis([39500 42500 -0.09 -0.06]);
+
+if zoom == 1;
+    axis([39500 42500 -0.09 -0.06]);
+else
+    axis([35000 85000 -0.09 -0.04]);
+end
+
 set(gca,'TickDir','out')
 set(gca, 'TickLength', [0.025 0.025]);
 set(gca, 'box', 'off')
-set(gcf, 'position',[680 558 560 210]) %orig
-%set(gcf, 'position', [680 558 210 210]);
+
+if zoom == 1;
+    set(gcf, 'position', [680 558 210 210]);
+else
+    set(gcf, 'position',[680 558 560 210]);
+end
+    
 set(gca,'FontSize',9);
 
 %to save figure in high resolution format
