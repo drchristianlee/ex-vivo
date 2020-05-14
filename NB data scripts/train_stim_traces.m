@@ -35,11 +35,13 @@ end
 plot(avg_trace, 'k');
 
 set(gcf, 'renderer' , 'Painters');
-axis([35000 85000 -0.09 -0.04]) %this can be modified to make plot more attractive
+axis([35000 85000 -0.09 -0.04]); %orig this can be modified to make plot more attractive
+%axis([39500 42500 -0.09 -0.06]);
 set(gca,'TickDir','out')
 set(gca, 'TickLength', [0.025 0.025]);
 set(gca, 'box', 'off')
-set(gcf,'position',[680 558 560 210]);
+set(gcf, 'position',[680 558 560 210]) %orig
+%set(gcf, 'position', [680 558 210 210]);
 set(gca,'FontSize',9);
 
 %to save figure in high resolution format
