@@ -39,7 +39,7 @@ plot(avg_trace, 'k');
 set(gcf, 'renderer' , 'Painters');
 
 if zoom == 1;
-    axis([39500 42500 -0.09 -0.06]);
+    axis([39500 42500 -0.09 -0.04]);
 else
     axis([35000 85000 -0.09 -0.04]);
 end
