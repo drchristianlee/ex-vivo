@@ -59,9 +59,9 @@ figure
 plot(I, V)
 
 %now compute input resistance from the smallest hyperpolarizing step
-Vir = (ans.RecTable.dataRaw{manipulation, 1}{1,1}(6000, 5) - ans.RecTable.dataRaw{manipulation, 1}{1,1}(2000, 5)) * 1000;
+Vir = (ans.RecTable.dataRaw{manipulation, 1}{1,1}(6000, 5) - ans.RecTable.dataRaw{manipulation, 1}{1,1}(2000, 5)) * 1000; %voltage change from 100 ms into sweep to 100 ms after pulse
 Iir = (ans.RecTable.stimWave{manipulation, 1}.DA_3(6000, 5) - ans.RecTable.stimWave{manipulation, 1}.DA_3(2000, 5)) * 10^-6;
-Rin = (Vir/Iir) / 1000000;
+Rin = (Vir/Iir) / 1000000; 
 
 %compute action potential parameters
 [pks, locs, w, p] = findpeaks(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,10), 'MinPeakHeight' , 0, 'MinPeakDistance', 5); %hard coded for dev purposes, uses sweep 10 also try integrating sampling rate
@@ -85,7 +85,7 @@ for spike = 1:size(locs, 1);
     half_amp = (peak - threshold(1, spike))/2;
     idx_1 = find(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50, 10) > half_amp);
     half_width(1, spike) = (1/ans.RecTable.SR(manipulation)) * size(idx_1, 1);
-    ahp = 
+    %ahp = 
 end
 
 result.Rin = Rin;
@@ -99,7 +99,7 @@ set(ax1, 'TickLength', [0.025 0.025]);
 set(ax2, 'TickLength', [0.025 0.025]);
 set(ax1, 'box', 'off')
 set(ax2, 'box', 'off')
-set(gcf,'position',[1100 470 310 410]);
+%set(gcf,'position',[1100 470 310 410]);
 set(ax1,'FontSize',9);
 set(ax2,'FontSize',9);
 % set(gcf, 'renderer' , 'Painters');
