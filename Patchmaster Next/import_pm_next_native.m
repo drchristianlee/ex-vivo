@@ -59,8 +59,8 @@ figure
 plot(I, V)
 
 %now compute input resistance from the smallest hyperpolarizing step
-Vir = (ans.RecTable.dataRaw{manipulation, 1}{1,1}(6000, 5) - ans.RecTable.dataRaw{manipulation, 1}{1,1}(2000, 5)) * 1000; %voltage change from 100 ms into sweep to 100 ms after pulse
-Iir = (ans.RecTable.stimWave{manipulation, 1}.DA_3(6000, 5) - ans.RecTable.stimWave{manipulation, 1}.DA_3(2000, 5)) * 10^-6;
+Vir = (ans.RecTable.dataRaw{manipulation, 1}{1,1}(6000, 5) - ans.RecTable.dataRaw{manipulation, 1}{1,1}(2000, 5)); %voltage change from 100 ms into sweep to 100 ms after pulse
+Iir = (ans.RecTable.stimWave{manipulation, 1}.DA_3(6000, 5) - ans.RecTable.stimWave{manipulation, 1}.DA_3(2000, 5));
 Rin = (Vir/Iir) / 1000000; 
 
 %compute action potential parameters
