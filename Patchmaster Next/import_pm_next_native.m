@@ -60,8 +60,8 @@ plot(I, V)
 
 %now compute input resistance from the smallest hyperpolarizing step
 Vir = (ans.RecTable.dataRaw{manipulation, 1}{1,1}(6000, 5) - ans.RecTable.dataRaw{manipulation, 1}{1,1}(2000, 5)); %voltage change from 100 ms into sweep to 100 ms after pulse
-Iir = (ans.RecTable.stimWave{manipulation, 1}.DA_3(6000, 5) - ans.RecTable.stimWave{manipulation, 1}.DA_3(2000, 5));
-Rin = (Vir/Iir) / 1000000; 
+Iir = (ans.RecTable.stimWave{manipulation, 1}.DA_3(6000, 5) - ans.RecTable.stimWave{manipulation, 1}.DA_3(2000, 5)) / 1000000000; %corrects bug where current is scaled incorrectly
+Rin = (Vir/Iir); %gives output in megaohms 
 
 %compute action potential parameters
 [pks, locs, w, p] = findpeaks(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,10), 'MinPeakHeight' , 0, 'MinPeakDistance', 5); %hard coded for dev purposes, uses sweep 10 also try integrating sampling rate
