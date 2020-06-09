@@ -11,6 +11,7 @@ close all
 cell = str2num(cell2mat(inputdlg('Please enter the cell you would like to plot data from')));
 manipulation = str2num(cell2mat(inputdlg('Please enter the manipulation you would like to plot')));
 NaNtrace = str2num(cell2mat(inputdlg('Please enter any sweeps to change to NaN or else leave empty')));
+meas_sweep = str2num(cell2mat(inputdlg('Please enter the sweep for action potential analysis; start with 10 and work backward')));
 
 HEKA_Importer.GUI %runs importer
 
@@ -61,15 +62,15 @@ plot(I, V)
 %now compute input resistance from the smallest hyperpolarizing step
 Vir = (ans.RecTable.dataRaw{manipulation, 1}{1,1}(6000, 5) - ans.RecTable.dataRaw{manipulation, 1}{1,1}(2000, 5)); %voltage change from 100 ms into sweep to 100 ms after pulse
 Iir = (ans.RecTable.stimWave{manipulation, 1}.DA_3(6000, 5) - ans.RecTable.stimWave{manipulation, 1}.DA_3(2000, 5)) / 1000000000; %corrects bug where current is scaled incorrectly
-Rin = (Vir/Iir); %gives output in megaohms 
+Rin = (Vir/Iir) / 1000000; %gives output in megaohms 
 
 %compute action potential parameters
-[pks, locs, w, p] = findpeaks(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,10), 'MinPeakHeight' , 0, 'MinPeakDistance', 5); %hard coded for dev purposes, uses sweep 10 also try integrating sampling rate
+[pks, locs, w, p] = findpeaks(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,meas_sweep), 'MinPeakHeight' , 0, 'MinPeakDistance', 5);
 figure
-plot(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,10))
+plot(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,meas_sweep))
 hold on
 plot(locs, pks, 'o');
-slope = diff(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,10)); %this uses the penultimate sweep, need to change if another sweep is desired
+slope = diff(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,meas_sweep)); %this uses the penultimate sweep, need to change if another sweep is desired
 
 for spike = 1:size(locs, 1);
     max_rise_slope = max(slope(locs(spike, 1) - 50: locs(spike, 1) + 50));
