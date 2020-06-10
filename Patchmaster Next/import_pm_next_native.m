@@ -20,7 +20,6 @@ for protocols = 1:size(ans.RecTable, 1);
         break
     else
     end
-    
 end
 
 manipulation = (manipulation - 1) + protocols;
@@ -81,10 +80,10 @@ for spike = 1:size(locs, 1);
         else
         end
     end
-    threshold(1, spike) = ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx,10)
-    peak = max(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50,10))
+    threshold(1, spike) = ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx,meas_sweep)
+    peak = max(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50,meas_sweep))
     half_amp = (peak - threshold(1, spike))/2;
-    idx_1 = find(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50, 10) > half_amp);
+    idx_1 = find(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50, meas_sweep) > half_amp);
     half_width(1, spike) = (1/ans.RecTable.SR(manipulation)) * size(idx_1, 1);
     %ahp = 
 end
