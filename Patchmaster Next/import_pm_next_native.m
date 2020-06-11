@@ -71,7 +71,7 @@ hold on
 plot(locs, pks, 'o');
 slope = diff(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,meas_sweep));
 
-for spike = 1:1%size(locs, 1);
+for spike = 1:1%size(locs, 1); %temporarily set to only analyze first spike for debugging
     max_rise_slope = max(slope(locs(spike, 1) - 50: locs(spike, 1) + 50));
     perc_max = max_rise_slope * 0.15;
     for thresh_idx = locs(spike, 1) - 50: locs(spike, 1) + 50;
@@ -83,9 +83,9 @@ for spike = 1:1%size(locs, 1);
     threshold(1, spike) = ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx,meas_sweep)
     peak = max(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50,meas_sweep))
     half_amp = (peak - threshold(1, spike))/2;
-    [row,col,idx_1] = find(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50, meas_sweep) > (threshold(1, spike) + half_amp)); %this is not working
+    idx_1 = find(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50, meas_sweep) > (threshold(1, spike) + half_amp)); %this is not working
     half_width(1, spike) = (1/ans.RecTable.SR(manipulation)) * size(idx_1, 1);
-    %ahp(1, spike) = 
+    ahp(1, spike) = min(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50, meas_sweep);
 end
 
 result.Rin = Rin;
