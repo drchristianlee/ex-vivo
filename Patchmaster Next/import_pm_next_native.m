@@ -83,7 +83,7 @@ for spike = 1:1%size(locs, 1); %temporarily set to only analyze first spike for 
     threshold(1, spike) = ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx,meas_sweep)
     peak = max(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50,meas_sweep))
     half_amp = (peak - threshold(1, spike))/2;
-    idx_1 = find(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50, meas_sweep) > (threshold(1, spike) + half_amp)); %this is not working
+    idx_1 = find(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50, meas_sweep) > (threshold(1, spike) + half_amp));
     half_width(1, spike) = (1/ans.RecTable.SR(manipulation)) * size(idx_1, 1);
     ahp(1, spike) = min(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50, meas_sweep)); %might need to modify for spikes near end of pulse
 end
