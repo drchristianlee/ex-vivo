@@ -71,7 +71,7 @@ hold on
 plot(locs, pks, 'o');
 slope = diff(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,meas_sweep));
 
-for spike = 1:1%size(locs, 1); %temporarily set to only analyze first spike for debugging
+for spike = 1:size(locs, 1); 
     max_rise_slope = max(slope(locs(spike, 1) - 50: locs(spike, 1) + 50));
     perc_max = max_rise_slope * 0.15;
     for thresh_idx = locs(spike, 1) - 50: locs(spike, 1) + 50;
@@ -82,16 +82,19 @@ for spike = 1:1%size(locs, 1); %temporarily set to only analyze first spike for 
     end
     threshold(1, spike) = ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx,meas_sweep)
     peak = max(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50,meas_sweep))
+    amp(1, spike) = peak - threshold(1, spike);
     half_amp = (peak - threshold(1, spike))/2;
     idx_1 = find(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50, meas_sweep) > (threshold(1, spike) + half_amp));
     half_width(1, spike) = (1/ans.RecTable.SR(manipulation)) * size(idx_1, 1);
-    ahp(1, spike) = min(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50, meas_sweep)); %might need to modify for spikes near end of pulse
+    ahp(1, spike) = threshold(1, spike) - (min(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50, meas_sweep))); %might need to modify for spikes near end of pulse
 end
 
 result.Rin = Rin;
 result.V_mem = V_mem;
-result.threshold = threshold; %continue with result and then save?
-
+result.threshold = threshold;
+result.amp = amp;
+result.width = half_width;
+result.ahp = ahp;
 
 set(ax1,'TickDir','out')
 set(ax2,'TickDir','out')
