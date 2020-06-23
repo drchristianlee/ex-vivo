@@ -89,6 +89,21 @@ for spike = 1:size(locs, 1);
     ahp(1, spike) = threshold(1, spike) - (min(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50, meas_sweep))); %might need to modify for spikes near end of pulse
 end
 
+%%%%%%% In process script for determining number of spikes for each current
+%%%%%%% amplitude
+counter = 1;
+for quant_sweep = 7:size(ans.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
+    [pks, locs, w, p] = findpeaks(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,quant_sweep), 'MinPeakHeight' , 0, 'MinPeakDistance', 5);
+    spikes_quant(1, counter);
+    
+    ans.RecTable.stimWave{manipulation, 1}.DA_3(:, quant_sweep)
+    counter = counter + 1;
+end
+
+
+
+%%%%%%%
+
 result.Rin = Rin;
 result.V_mem = V_mem;
 result.threshold = threshold;
