@@ -90,21 +90,21 @@ for spike = 1:size(locs, 1);
 end
 
 %quantify the number of spikes for each depolarizing current pulse
-%%%%%%% In process script for determining number of spikes for each current
-%%%%%%% amplitude
+
 counter = 1;
 for quant_sweep = 7:size(ans.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
-    if (sum(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,quant_sweep)) > 0) > 0;
-    [pks, locs, w, p] = findpeaks(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,quant_sweep), 'MinPeakHeight' , 0, 'MinPeakDistance', 5);
-    spikes_quant(1, counter) = size(pks, 1);
-    step(1, quant_sweep) = max(ans.RecTable.stimWave{manipulation, 1}.DA_3(:, quant_sweep));
-    counter = counter + 1;
+    finder = ans.RecTable.dataRaw{manipulation,1}{1,1}(:,quant_sweep) > 0;
+    decision = sum(finder);
+    if decision > 0;
+        [pks, locs, w, p] = findpeaks(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,quant_sweep), 'MinPeakHeight' , 0, 'MinPeakDistance', 5);
+        spikes_quant(1, counter) = size(pks, 1);
+        curr_amp(1, counter) = max(ans.RecTable.stimWave{manipulation, 1}.DA_3(:, quant_sweep));
+        counter = counter + 1;
     else
-end
+        quant_sweep = quant_sweep + 1;
+    end
 end
 
-
-%%%%%%%
 
 result.Rin = Rin;
 result.V_mem = V_mem;
