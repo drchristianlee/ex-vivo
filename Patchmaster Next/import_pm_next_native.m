@@ -1,4 +1,4 @@
-% To run this script have the folder containing this script as well as
+    % To run this script have the folder containing this script as well as
 % HEKA_Patchmaster_Importer in the path.
 
 % This script uses HEKA_Patchmaster_Importer to import data. As of January
