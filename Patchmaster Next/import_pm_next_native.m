@@ -105,6 +105,9 @@ for quant_sweep = 7:size(ans.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
     end
 end
 
+figure
+plot(curr_amp, spikes_quant);
+
 
 result.Rin = Rin;
 result.V_mem = V_mem;
@@ -112,6 +115,8 @@ result.threshold = threshold;
 result.amp = amp;
 result.width = half_width;
 result.ahp = ahp;
+result.curr = curr_amp;
+result.spikes = spikes_quant;
 
 set(ax1,'TickDir','out')
 set(ax2,'TickDir','out')
