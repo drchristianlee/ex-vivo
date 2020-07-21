@@ -132,5 +132,8 @@ set(ax2,'FontSize',9);
 %to save figure in high resolution format
 % print -painters -depsc output.eps 
 
-file_nm = [ans.opt.filepath(end-17 : end-8) , '_cell_' , num2str(cell(1,1)) , '_results.mat']
-save(file_nm , 'result')
+[filepath] = fileparts(ans.opt.filepath)
+cd(filepath)
+
+% file_nm = [ans.opt.filepath(end-17 : end-8) , '_cell_' , num2str(cell(1,1)) , '_results.mat']
+% save(file_nm , 'result')
