@@ -12,8 +12,13 @@ cell = str2num(cell2mat(inputdlg('Please enter the cell you would like to plot d
 manipulation = str2num(cell2mat(inputdlg('Please enter the manipulation you would like to plot')));
 NaNtrace = str2num(cell2mat(inputdlg('Please enter any sweeps to change to NaN or else leave empty')));
 meas_sweep = str2num(cell2mat(inputdlg('Please enter the sweep for action potential analysis; start with 10 and work backward')));
+sav_result = str2num(cell2mat(inputdlg('save data 1 for yes')))
 
 HEKA_Importer.GUI %runs importer
+
+
+[filepath] = fileparts(ans.opt.filepath)
+cd(filepath)
 
 for protocols = 1:size(ans.RecTable, 1);
     if ans.RecTable{protocols, 1} == cell;
@@ -117,6 +122,7 @@ result.width = half_width;
 result.ahp = ahp;
 result.curr = curr_amp;
 result.spikes = spikes_quant;
+result.sweep = meas_sweep;
 
 set(ax1,'TickDir','out')
 set(ax2,'TickDir','out')
@@ -132,8 +138,9 @@ set(ax2,'FontSize',9);
 %to save figure in high resolution format
 % print -painters -depsc output.eps 
 
-[filepath] = fileparts(ans.opt.filepath)
-cd(filepath)
 
-% file_nm = [ans.opt.filepath(end-17 : end-8) , '_cell_' , num2str(cell(1,1)) , '_results.mat']
-% save(file_nm , 'result')
+if sav_result == 1;
+    file_nm = [ans.opt.filepath(end-17 : end-8) , '_cell_' , num2str(cell(1,1)) , '_results.mat']
+    save(file_nm , 'result')
+else
+end
