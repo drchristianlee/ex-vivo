@@ -151,13 +151,15 @@ elseif analyze == 2;
     
     figure
     for sweep = 1:size(ans.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
-        plot(time_vector(37500:42000) , ans.RecTable.dataRaw{manipulation, 1}{1,1}(37500:42000, sweep), 'y');
+        plot(time_vector(39200:41600) , ans.RecTable.dataRaw{manipulation, 1}{1,1}(39200:41600, sweep), 'y');
         hold on
-        plot(time_vector(37500:42000), avg_psp(37500:42000), 'k');
+        plot(time_vector(39200:41600), avg_psp(39200:41600), 'k');
         axis tight
     end
     
-    
+    psp_base = nanmean(avg_psp(39400:39800));
+    psp_max = max(avg_psp(40000:40800));
+    psp_amplitude = psp_max - psp_base
     
 end
 
