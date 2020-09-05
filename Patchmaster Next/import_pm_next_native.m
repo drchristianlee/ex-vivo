@@ -161,6 +161,9 @@ elseif analyze == 2;
     psp_max = max(avg_psp(40000:40800));
     psp_amplitude = psp_max - psp_base
     
+    result.amplitude = psp_amplitude;
+    result.nan = NaNtrace;
+    
 end
 
 if sav_result == 1;
