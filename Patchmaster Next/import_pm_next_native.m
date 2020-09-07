@@ -154,7 +154,8 @@ elseif analyze == 2;
         plot(time_vector(39200:41600) , ans.RecTable.dataRaw{manipulation, 1}{1,1}(39200:41600, sweep), 'y');
         hold on
         plot(time_vector(39200:41600), avg_psp(39200:41600), 'k');
-        axis tight
+        %axis tight
+        axis([1960 2080 -0.080 -0.072])
     end
     
     psp_base = nanmean(avg_psp(39400:39800));
