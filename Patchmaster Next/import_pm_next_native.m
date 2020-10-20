@@ -129,6 +129,7 @@ if analyze == 1;
     result.curr = curr_amp;
     result.spikes = spikes_quant;
     result.sweep = meas_sweep;
+    result.nan = NaNtrace;
     
     set(ax1,'TickDir','out')
     set(ax2,'TickDir','out')
