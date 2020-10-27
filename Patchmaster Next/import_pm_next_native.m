@@ -170,6 +170,7 @@ end
 
 if sav_result == 1;
     file_nm = [ans.opt.filepath(end-17 : end-8) , '_cell_' , num2str(cell(1,1)) , '_manipulation_' , num2str(manipulation) , '_results.mat']
+    result.filename = file_nm;
     save(file_nm , 'result')
 else
 end
