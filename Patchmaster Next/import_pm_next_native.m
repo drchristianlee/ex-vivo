@@ -11,11 +11,11 @@ close all
 analyze = str2num(cell2mat(inputdlg('AP analysis (1) or PSP analysis (2)')));
 cell = str2num(cell2mat(inputdlg('Please enter the cell you would like to plot data from')));
 manipulation = str2num(cell2mat(inputdlg('Please enter the manipulation you would like to plot')));
-NaNtrace = str2num(cell2mat(inputdlg('Please enter any sweeps to change to NaN or else leave empty')));
 if analyze == 1;
 meas_sweep = str2num(cell2mat(inputdlg('Please enter the sweep for action potential analysis; start with 10 and work backward')));
 else
 end
+NaNtrace = str2num(cell2mat(inputdlg('Please enter any sweeps to change to NaN or else leave empty')));
 sav_result = str2num(cell2mat(inputdlg('save data 1 for yes')))
 
 HEKA_Importer.GUI %runs importer
