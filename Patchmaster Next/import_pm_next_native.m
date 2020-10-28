@@ -16,7 +16,7 @@ meas_sweep = str2num(cell2mat(inputdlg('Please enter the sweep for action potent
 else
 end
 NaNtrace = str2num(cell2mat(inputdlg('Please enter any sweeps to change to NaN or else leave empty')));
-sav_result = str2num(cell2mat(inputdlg('save data 1 for yes')))
+sav_result = str2num(cell2mat(inputdlg('Save data? 1 for yes')))
 
 HEKA_Importer.GUI %runs importer
 
@@ -81,6 +81,7 @@ if analyze == 1;
     hold on
     plot(locs, pks, 'o');
     slope = diff(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,meas_sweep));
+    result.peaks =((1/ans.RecTable.SR(manipulation)) * locs)';
     
     for spike = 1:size(locs, 1);
         max_rise_slope = max(slope(locs(spike, 1) - 50: locs(spike, 1) + 50));
@@ -91,23 +92,23 @@ if analyze == 1;
             else
             end
         end
-        threshold(1, spike) = ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx,meas_sweep)
-        peak = max(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50,meas_sweep))
+        threshold(1, spike) = ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx,meas_sweep);
+        peak = max(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50,meas_sweep));
         amp(1, spike) = peak - threshold(1, spike);
         half_amp = (peak - threshold(1, spike))/2;
         idx_1 = find(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50, meas_sweep) > (threshold(1, spike) + half_amp));
         half_width(1, spike) = (1/ans.RecTable.SR(manipulation)) * size(idx_1, 1);
-        ahp(1, spike) = threshold(1, spike) - (min(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50, meas_sweep))); %might need to modify for spikes near end of pulse
+        ahp(1, spike) = threshold(1, spike) - (min(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 100, meas_sweep))); %might need to modify for spikes near end of pulse
     end
     
     %quantify the number of spikes for each depolarizing current pulse
     
     counter = 1;
     for quant_sweep = 7:size(ans.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
-        finder = ans.RecTable.dataRaw{manipulation,1}{1,1}(:,quant_sweep) > 0;
+        finder = ans.RecTable.dataRaw{manipulation,1}{1,1}(:, quant_sweep) > 0;
         decision = sum(finder);
         if decision > 0;
-            [pks, locs, w, p] = findpeaks(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,quant_sweep), 'MinPeakHeight' , 0, 'MinPeakDistance', 5);
+            [pks, locs, w, p] = findpeaks(ans.RecTable.dataRaw{manipulation,1}{1,1}(:, quant_sweep), 'MinPeakHeight' , 0, 'MinPeakDistance', 5);
             spikes_quant(1, counter) = size(pks, 1);
             curr_amp(1, counter) = max(ans.RecTable.stimWave{manipulation, 1}.DA_3(:, quant_sweep));
             counter = counter + 1;
@@ -126,8 +127,7 @@ if analyze == 1;
     result.amp = amp;
     result.width = half_width;
     result.ahp = ahp;
-    result.curr = curr_amp;
-    result.spikes = spikes_quant;
+    result.curr = curr_amp
     result.sweep = meas_sweep;
     result.nan = NaNtrace;
     
