@@ -112,7 +112,7 @@ if analyze == 1;
     result.peaks =((1/(ans.RecTable.SR(manipulation)* 5)) * locs)';
     
     for spike = 1:size(locs, 1);
-        max_rise_slope = max(slope(locs(spike, 1) - 50: locs(spike, 1) + 50));
+        max_rise_slope = max(slope(locs(spike, 1) - 250: locs(spike, 1) + 250)); %stopped here 11/2
         perc_max = max_rise_slope * 0.15;
         for thresh_idx = locs(spike, 1) - 50: locs(spike, 1) + 50;
             if slope(thresh_idx, 1) > perc_max;
