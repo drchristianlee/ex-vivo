@@ -102,31 +102,31 @@ if analyze == 1;
     end
     
     %now calculate spike parameters using the interpolated trace
-    trace_interp = interp(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,meas_sweep), 5);
+    trace_interp = interp(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,meas_sweep), 5); %increase sample rate by 5
     [pks, locs, w, p] = findpeaks(trace_interp, 'MinPeakHeight' , 0, 'MinPeakDistance', 5);
     figure
     plot(trace_interp)
     hold on
     plot(locs, pks, 'o');
     slope = diff(trace_interp);
-    result.peaks =((1/(ans.RecTable.SR(manipulation)* 5)) * locs)';
+    result.peaks_interp =((1/(ans.RecTable.SR(manipulation)* 5)) * locs)';
     
     for spike = 1:size(locs, 1);
-        max_rise_slope = max(slope(locs(spike, 1) - 250: locs(spike, 1) + 250)); %stopped here 11/2
+        max_rise_slope = max(slope(locs(spike, 1) - 250: locs(spike, 1) + 250));
         perc_max = max_rise_slope * 0.15;
-        for thresh_idx = locs(spike, 1) - 50: locs(spike, 1) + 50;
+        for thresh_idx = locs(spike, 1) - 250: locs(spike, 1) + 250
             if slope(thresh_idx, 1) > perc_max;
                 break
             else
             end
         end
-        threshold(1, spike) = ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx,meas_sweep);
-        peak = max(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50,meas_sweep));
-        amp(1, spike) = peak - threshold(1, spike);
-        half_amp = (peak - threshold(1, spike))/2;
-        idx_1 = find(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50, meas_sweep) > (threshold(1, spike) + half_amp));
-        half_width(1, spike) = (1/ans.RecTable.SR(manipulation)) * size(idx_1, 1);
-        ahp(1, spike) = threshold(1, spike) - (min(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 100, meas_sweep))); %might need to modify for spikes near end of pulse
+        threshold_interp(1, spike) = trace_interp(thresh_idx, 1);
+        peak_interp = max(trace_interp(thresh_idx:thresh_idx + 250, 1));
+        amp_interp(1, spike) = peak_interp - threshold_interp(1, spike);
+        half_amp = (peak_interp - threshold_interp(1, spike))/2;
+        idx_1 = find(trace_interp(thresh_idx:thresh_idx + 250, 1) > (threshold(1, spike) + half_amp));
+        half_width_interp(1, spike) = (1/ans.RecTable.SR(manipulation)*5) * size(idx_1, 1);
+        ahp_interp(1, spike) = threshold_interp(1, spike) - (min(trace_interp(thresh_idx:thresh_idx + 500, 1))); %might need to modify for spikes near end of pulse
     end
     
     %quantify the number of spikes for each depolarizing current pulse
@@ -158,6 +158,10 @@ if analyze == 1;
     result.curr = curr_amp
     result.sweep = meas_sweep;
     result.nan = NaNtrace;
+    result.threshold_interp = threshold_interp;
+    result.amp_interp = amp_interp;
+    result.width_interp = half_width_interp;
+    result.ahp_interp = ahp_interp;
     
     set(ax1,'TickDir','out')
     set(ax2,'TickDir','out')
