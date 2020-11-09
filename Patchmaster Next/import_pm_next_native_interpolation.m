@@ -125,7 +125,7 @@ if analyze == 1;
         amp_interp(1, spike) = peak_interp - threshold_interp(1, spike);
         half_amp = (peak_interp - threshold_interp(1, spike))/2;
         idx_1 = find(trace_interp(thresh_idx:thresh_idx + 250, 1) > (threshold(1, spike) + half_amp));
-        half_width_interp(1, spike) = (1/ans.RecTable.SR(manipulation)*5) * size(idx_1, 1);
+        half_width_interp(1, spike) = (1/(ans.RecTable.SR(manipulation)*5)) * size(idx_1, 1);
         ahp_interp(1, spike) = threshold_interp(1, spike) - (min(trace_interp(thresh_idx:thresh_idx + 500, 1))); %might need to modify for spikes near end of pulse
     end
     
