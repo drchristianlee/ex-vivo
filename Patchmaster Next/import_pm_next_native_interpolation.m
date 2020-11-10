@@ -96,7 +96,7 @@ if analyze == 1;
         peak = max(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50,meas_sweep));
         amp(1, spike) = peak - threshold(1, spike);
         half_amp = (peak - threshold(1, spike))/2;
-        idx_1 = find(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50, meas_sweep) > (threshold(1, spike) + half_amp));
+        idx_1 = find(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50, meas_sweep) > half_amp);
         half_width(1, spike) = (1/ans.RecTable.SR(manipulation)) * size(idx_1, 1);
         ahp(1, spike) = threshold(1, spike) - (min(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 100, meas_sweep))); %might need to modify for spikes near end of pulse
     end
@@ -124,7 +124,7 @@ if analyze == 1;
         peak_interp = max(trace_interp(thresh_idx:thresh_idx + 250, 1));
         amp_interp(1, spike) = peak_interp - threshold_interp(1, spike);
         half_amp = (peak_interp - threshold_interp(1, spike))/2;
-        idx_1 = find(trace_interp(thresh_idx:thresh_idx + 250, 1) > (threshold(1, spike) + half_amp));
+        idx_1 = find(trace_interp(thresh_idx:thresh_idx + 250, 1) > half_amp);
         half_width_interp(1, spike) = (1/(ans.RecTable.SR(manipulation)*5)) * size(idx_1, 1);
         ahp_interp(1, spike) = threshold_interp(1, spike) - (min(trace_interp(thresh_idx:thresh_idx + 500, 1))); %might need to modify for spikes near end of pulse
     end
