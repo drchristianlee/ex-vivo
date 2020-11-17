@@ -109,7 +109,7 @@ if analyze == 1;
     
     %now calculate spike parameters using the interpolated trace
     trace_interp = interp(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,meas_sweep), 5); %increase sample rate by 5
-    [pks, locs, w, p] = findpeaks(trace_interp, 'MinPeakHeight' , 0, 'MinPeakDistance', 5);
+    [pks, locs, w, p] = findpeaks(trace_interp, 'MinPeakHeight' , 0, 'MinPeakDistance', 25);
     figure
     plot(trace_interp)
     hold on
