@@ -18,20 +18,20 @@ end
 NaNtrace = str2num(cell2mat(inputdlg('Please enter any sweeps to change to NaN or else leave empty')));
 sav_result = str2num(cell2mat(inputdlg('Save data? 1 for yes')))
 
-HEKA_Importer.GUI %runs importer
+data = HEKA_Importer.GUI %runs importer
 
 
-[filepath] = fileparts(ans.opt.filepath)
+[filepath] = fileparts(data.opt.filepath)
 cd(filepath)
 
 if sav_result == 1;
-    file_nm = [ans.opt.filepath(end-17 : end-8) , '_cell_' , num2str(cell(1,1)) , '_manipulation_' , num2str(manipulation) , '_results.mat']
+    file_nm = [data.opt.filepath(end-17 : end-8) , '_cell_' , num2str(cell(1,1)) , '_manipulation_' , num2str(manipulation) , '_results.mat']
     result.filename = file_nm;
 else
 end
 
-for protocols = 1:size(ans.RecTable, 1);
-    if ans.RecTable{protocols, 1} == cell;
+for protocols = 1:size(data.RecTable, 1);
+    if data.RecTable{protocols, 1} == cell;
         break
     else
     end
@@ -42,7 +42,7 @@ manipulation = (manipulation - 1) + protocols;
 
 if isempty(NaNtrace) == 0;
     for correctval = 1:size(NaNtrace, 2);
-        ans.RecTable.dataRaw{manipulation, 1}{1,1}(1:end, NaNtrace(1,correctval)) = NaN;
+        data.RecTable.dataRaw{manipulation, 1}{1,1}(1:end, NaNtrace(1,correctval)) = NaN;
     end
 else
 end
@@ -50,44 +50,44 @@ end
 if analyze == 1;
     time_vector = 0:0.05:899.995; %hard coded at the present
     
-    for sweep = 1:size(ans.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
+    for sweep = 1:size(data.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
         ax1 = subplot(2,1,1);
-        plot(time_vector , ans.RecTable.dataRaw{manipulation, 1}{1,1}(:, sweep));
+        plot(time_vector , data.RecTable.dataRaw{manipulation, 1}{1,1}(:, sweep));
         hold on
         axis tight
         ax2 = subplot(2,1,2);
-        plot(time_vector , ans.RecTable.stimWave{manipulation, 1}.DA_3(:, sweep));
+        plot(time_vector , data.RecTable.stimWave{manipulation, 1}.DA_3(:, sweep));
         hold on
         axis([0 900 -2 2])
     end
     
     %code to find resting membrane potential
-    Vtrace = ans.RecTable.dataRaw{manipulation, 1}{1,1}(1000:2999, :);
+    Vtrace = data.RecTable.dataRaw{manipulation, 1}{1,1}(1000:2999, :);
     V_avg = mean(Vtrace, 1);
     V_mem = mean(V_avg, 2) * 1000;
     
     %code to find and plot input resistance and plot IV curve
-    for iv_step = 1:size(ans.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
-        I(iv_step, 1) = ans.RecTable.stimWave{manipulation, 1}.DA_3(6000, iv_step);
-        V(iv_step, 1) = ans.RecTable.dataRaw{manipulation, 1}{1,1}(6000, iv_step);
+    for iv_step = 1:size(data.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
+        I(iv_step, 1) = data.RecTable.stimWave{manipulation, 1}.DA_3(6000, iv_step);
+        V(iv_step, 1) = data.RecTable.dataRaw{manipulation, 1}{1,1}(6000, iv_step);
     end
     
     figure
     plot(I, V)
     
     %now compute input resistance from the smallest hyperpolarizing step
-    Vir = (ans.RecTable.dataRaw{manipulation, 1}{1,1}(6000, 5) - ans.RecTable.dataRaw{manipulation, 1}{1,1}(2000, 5)); %voltage change from 100 ms into sweep to 100 ms after pulse
-    Iir = (ans.RecTable.stimWave{manipulation, 1}.DA_3(6000, 5) - ans.RecTable.stimWave{manipulation, 1}.DA_3(2000, 5)) / 1000000000; %corrects bug where current is scaled incorrectly
+    Vir = (data.RecTable.dataRaw{manipulation, 1}{1,1}(6000, 5) - data.RecTable.dataRaw{manipulation, 1}{1,1}(2000, 5)); %voltage change from 100 ms into sweep to 100 ms after pulse
+    Iir = (data.RecTable.stimWave{manipulation, 1}.DA_3(6000, 5) - data.RecTable.stimWave{manipulation, 1}.DA_3(2000, 5)) / 1000000000; %corrects bug where current is scaled incorrectly
     Rin = (Vir/Iir) / 1000000; %gives output in megaohms
     
     %compute action potential parameters
-    [pks, locs, w, p] = findpeaks(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,meas_sweep), 'MinPeakHeight' , 0, 'MinPeakDistance', 5);
+    [pks, locs, w, p] = findpeaks(data.RecTable.dataRaw{manipulation,1}{1,1}(:,meas_sweep), 'MinPeakHeight' , 0, 'MinPeakDistance', 5);
     figure
-    plot(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,meas_sweep))
+    plot(data.RecTable.dataRaw{manipulation,1}{1,1}(:,meas_sweep))
     hold on
     plot(locs, pks, 'o');
-    slope = diff(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,meas_sweep));
-    result.peaks =((1/ans.RecTable.SR(manipulation)) * locs)';
+    slope = diff(data.RecTable.dataRaw{manipulation,1}{1,1}(:,meas_sweep));
+    result.peaks =((1/data.RecTable.SR(manipulation)) * locs)';
     
     for spike = 1:size(locs, 1);
         max_rise_slope = max(slope(locs(spike, 1) - 50: locs(spike, 1) + 50));
@@ -98,24 +98,24 @@ if analyze == 1;
             else
             end
         end
-        threshold(1, spike) = ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx,meas_sweep);
-        peak = max(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50,meas_sweep));
+        threshold(1, spike) = data.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx,meas_sweep);
+        peak = max(data.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50,meas_sweep));
         amp(1, spike) = peak - threshold(1, spike);
         half_amp = ((peak - threshold(1, spike))/2) + threshold(1, spike);
-        idx_1 = find(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50, meas_sweep) > half_amp);
-        half_width(1, spike) = (1/ans.RecTable.SR(manipulation)) * size(idx_1, 1);
-        ahp(1, spike) = threshold(1, spike) - (min(ans.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 100, meas_sweep))); %might need to modify for spikes near end of pulse
+        idx_1 = find(data.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 50, meas_sweep) > half_amp);
+        half_width(1, spike) = (1/data.RecTable.SR(manipulation)) * size(idx_1, 1);
+        ahp(1, spike) = threshold(1, spike) - (min(data.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 100, meas_sweep))); %might need to modify for spikes near end of pulse
     end
     
     %now calculate spike parameters using the interpolated trace
-    trace_interp = interp(ans.RecTable.dataRaw{manipulation,1}{1,1}(:,meas_sweep), 5); %increase sample rate by 5
+    trace_interp = interp(data.RecTable.dataRaw{manipulation,1}{1,1}(:,meas_sweep), 5); %increase sample rate by 5
     [pks, locs, w, p] = findpeaks(trace_interp, 'MinPeakHeight' , 0, 'MinPeakDistance', 25);
     figure
     plot(trace_interp)
     hold on
     plot(locs, pks, 'o');
     slope = diff(trace_interp);
-    result.peaks_interp =((1/(ans.RecTable.SR(manipulation)* 5)) * locs)';
+    result.peaks_interp =((1/(data.RecTable.SR(manipulation)* 5)) * locs)';
     
     for spike = 1:size(locs, 1);
         max_rise_slope = max(slope(locs(spike, 1) - 250: locs(spike, 1) + 250));
@@ -131,20 +131,20 @@ if analyze == 1;
         amp_interp(1, spike) = peak_interp - threshold_interp(1, spike);
         half_amp = ((peak_interp - threshold_interp(1, spike))/2) + threshold_interp(1,spike);
         idx_1 = find(trace_interp(thresh_idx:thresh_idx + 250, 1) > half_amp);
-        half_width_interp(1, spike) = (1/(ans.RecTable.SR(manipulation)*5)) * size(idx_1, 1);
+        half_width_interp(1, spike) = (1/(data.RecTable.SR(manipulation)*5)) * size(idx_1, 1);
         ahp_interp(1, spike) = threshold_interp(1, spike) - (min(trace_interp(thresh_idx:thresh_idx + 500, 1))); %might need to modify for spikes near end of pulse
     end
     
     %quantify the number of spikes for each depolarizing current pulse
     
     counter = 1;
-    for quant_sweep = 7:size(ans.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
-        finder = ans.RecTable.dataRaw{manipulation,1}{1,1}(:, quant_sweep) > 0;
+    for quant_sweep = 7:size(data.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
+        finder = data.RecTable.dataRaw{manipulation,1}{1,1}(:, quant_sweep) > 0;
         decision = sum(finder);
         if decision > 0;
-            [pks, locs, w, p] = findpeaks(ans.RecTable.dataRaw{manipulation,1}{1,1}(:, quant_sweep), 'MinPeakHeight' , 0, 'MinPeakDistance', 5);
+            [pks, locs, w, p] = findpeaks(data.RecTable.dataRaw{manipulation,1}{1,1}(:, quant_sweep), 'MinPeakHeight' , 0, 'MinPeakDistance', 5);
             spikes_quant(1, counter) = size(pks, 1);
-            curr_amp(1, counter) = max(ans.RecTable.stimWave{manipulation, 1}.DA_3(:, quant_sweep));
+            curr_amp(1, counter) = max(data.RecTable.stimWave{manipulation, 1}.DA_3(:, quant_sweep));
             counter = counter + 1;
         else
             quant_sweep = quant_sweep + 1;
@@ -186,11 +186,11 @@ elseif analyze == 2;
     
     time_vector = 0:0.05:6002.45; %hard coded at the present
     
-    avg_psp = nanmean(ans.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
+    avg_psp = nanmean(data.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
     
     figure
-    for sweep = 1:size(ans.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
-        plot(time_vector(39200:41600) , ans.RecTable.dataRaw{manipulation, 1}{1,1}(39200:41600, sweep), 'y');
+    for sweep = 1:size(data.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
+        plot(time_vector(39200:41600) , data.RecTable.dataRaw{manipulation, 1}{1,1}(39200:41600, sweep), 'y');
         hold on
         plot(time_vector(39200:41600), avg_psp(39200:41600), 'k');
         %axis tight
