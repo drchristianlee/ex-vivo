@@ -107,7 +107,7 @@ if analyze == 1;
         ahp(1, spike) = threshold(1, spike) - (min(data.RecTable.dataRaw{manipulation,1}{1,1}(thresh_idx:thresh_idx + 100, meas_sweep))); %might need to modify for spikes near end of pulse
     end
     
-    %now calculate spike parameters using the interpolated trace
+    %now calculate action potential parameters using the interpolated trace
     trace_interp = interp(data.RecTable.dataRaw{manipulation,1}{1,1}(:,meas_sweep), 5); %increase sample rate by 5
     [pks, locs, w, p] = findpeaks(trace_interp, 'MinPeakHeight' , 0, 'MinPeakDistance', 25);
     figure
