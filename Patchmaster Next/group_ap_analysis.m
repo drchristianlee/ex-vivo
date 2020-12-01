@@ -6,7 +6,7 @@ results_by_neuron = [];
 
 for validation_step = 1:size(data, 2);
     size_validation = size((data{1, validation_step}.peaks), 2);
-     if (size((data{1,validation_step}.threshold), 2)~= size_validation) == 0;
+     if (size((data{1,validation_step}.threshold), 2)~= size_validation) == 1;
         disp('There is a size mismatch in threshold. Validate data')
      elseif (size((data{1,validation_step}.amp), 2)~= size_validation) == 1;
         disp('There is a size mismatch in amp. Validate data')
@@ -40,13 +40,23 @@ for step = 1:size(data, 2);
     results_by_neuron.ahp_interp{1, step} = mean(data{1,step}.ahp_interp, 2);
 end
 
-group_results.Rin = mean(cell2mat(results_by_neuron.Rin), 2);
-group_results.V_mem = mean(cell2mat(results_by_neuron.V_mem), 2);
-group_results.thresh = mean(cell2mat(results_by_neuron.thresh), 2);
-group_results.amp = mean(cell2mat(results_by_neuron.amp), 2);
-group_results.width = mean(cell2mat(results_by_neuron.width), 2);
-group_results.ahp = mean(cell2mat(results_by_neuron.ahp), 2);
-group_results.threshold_interp = mean(cell2mat(results_by_neuron.threshold_interp), 2);
-group_results.amp_interp = mean(cell2mat(results_by_neuron.amp_interp), 2);
-group_results.width_interp = mean(cell2mat(results_by_neuron.width_interp), 2);
-group_results.ahp_interp = mean(cell2mat(results_by_neuron.ahp_interp), 2);
+group_results.Rin(1,1) = mean(cell2mat(results_by_neuron.Rin), 2);
+group_results.Rin(1,2) = (std(cell2mat(results_by_neuron.Rin), 0, 2))/(sqrt(size_validation));
+group_results.V_mem(1,1) = mean(cell2mat(results_by_neuron.V_mem), 2);
+group_results.V_mem(1,2) = (std(cell2mat(results_by_neuron.V_mem), 0, 2))/(sqrt(size_validation));
+group_results.thresh(1,1) = mean(cell2mat(results_by_neuron.thresh), 2);
+group_results.thresh(1,2) = (std(cell2mat(results_by_neuron.thresh), 0, 2))/(sqrt(size_validation));
+group_results.amp(1,1) = mean(cell2mat(results_by_neuron.amp), 2);
+group_results.amp(1,2) = (std(cell2mat(results_by_neuron.amp), 0, 2))/(sqrt(size_validation));
+group_results.width(1,1) = mean(cell2mat(results_by_neuron.width), 2);
+group_results.width(1,2) = (std(cell2mat(results_by_neuron.width), 0, 2))/(sqrt(size_validation));
+group_results.ahp(1,1) = mean(cell2mat(results_by_neuron.ahp), 2);
+group_results.ahp(1,2) = (std(cell2mat(results_by_neuron.ahp), 0, 2))/(sqrt(size_validation));
+group_results.threshold_interp(1,1) = mean(cell2mat(results_by_neuron.threshold_interp), 2);
+group_results.threshold_interp(1,2) = (std(cell2mat(results_by_neuron.threshold_interp), 0, 2))/(sqrt(size_validation));
+group_results.amp_interp(1,1) = mean(cell2mat(results_by_neuron.amp_interp), 2);
+group_results.amp_interp(1,2) = (std(cell2mat(results_by_neuron.amp_interp), 0, 2))/(sqrt(size_validation));
+group_results.width_interp(1,1) = mean(cell2mat(results_by_neuron.width_interp), 2);
+group_results.width_interp(1,2) = (std(cell2mat(results_by_neuron.width_interp), 0, 2))/(sqrt(size_validation));
+group_results.ahp_interp(1,1) = mean(cell2mat(results_by_neuron.ahp_interp), 2);
+group_results.ahp_interp(1,2) = (std(cell2mat(results_by_neuron.ahp_interp), 0, 2))/(sqrt(size_validation));
