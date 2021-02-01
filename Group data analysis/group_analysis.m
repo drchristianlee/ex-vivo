@@ -21,4 +21,9 @@ result.V_mem = mean(V_mem_holder, 2);
 result.thresold = mean(threshold_holder, 2);
 result.amp = mean(amp_holder, 2);
 result.width = mean(width_holder, 2);
+result.threshold_interp = mean(threshold_interp_holder, 2);
+result.amp_interp = mean(amp_interp_holder, 2);
+result.width_interp = mean(width_interp_holder, 2);
+result.ahp_interp = mean(ahp_interp_holder, 2);
+
 
