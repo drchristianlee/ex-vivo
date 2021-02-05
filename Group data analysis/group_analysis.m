@@ -14,8 +14,8 @@ for step = 1:size(data, 2);
     ahp_holder(1, step) = mean(data{1, step}.ahp);
     threshold_interp_holder(1, step) = mean(data{1, step}.threshold_interp);
     amp_interp_holder(1, step) = mean(data{1, step}.amp_interp);
-    width_interp(1, step) = mean(data{1, step}.width_interp);
-    ahp_interp(1, step) = mean(data{1, step}.ahp_interp);
+    width_interp_holder(1, step) = mean(data{1, step}.width_interp);
+    ahp_interp_holder(1, step) = mean(data{1, step}.ahp_interp);
 end
 
 result.Rin = mean(Rin_holder, 2);
