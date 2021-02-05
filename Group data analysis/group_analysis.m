@@ -1,6 +1,8 @@
 clear
 close all
 
+sav_result = str2num(cell2mat(inputdlg('Save data? 1 for yes')))
+
 data = load_mat_files;
 
 for step = 1:size(data, 2);
@@ -26,4 +28,7 @@ result.amp_interp = mean(amp_interp_holder, 2);
 result.width_interp = mean(width_interp_holder, 2);
 result.ahp_interp = mean(ahp_interp_holder, 2);
 
-
+if sav_result == 1;
+save('average.mat' , 'result')
+else
+end
