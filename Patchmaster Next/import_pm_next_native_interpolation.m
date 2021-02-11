@@ -168,6 +168,8 @@ if analyze == 1;
     result.amp_interp = amp_interp;
     result.width_interp = half_width_interp;
     result.ahp_interp = ahp_interp;
+    result.curr_amp = curr_amp;
+    result.spikes_quant = spikes_quant;
     
     set(ax1,'TickDir','out')
     set(ax2,'TickDir','out')
