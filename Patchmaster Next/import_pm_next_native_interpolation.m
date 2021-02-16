@@ -133,6 +133,10 @@ if analyze == 1;
         idx_1 = find(trace_interp(thresh_idx:thresh_idx + 250, 1) > half_amp);
         half_width_interp(1, spike) = (1/(data.RecTable.SR(manipulation)*5)) * size(idx_1, 1);
         ahp_interp(1, spike) = threshold_interp(1, spike) - (min(trace_interp(thresh_idx:thresh_idx + 500, 1))); %might need to modify for spikes near end of pulse
+        [min, I] = min(trace_interp(thresh_idx:thresh_idx + 50, 1));
+        ahp_ind = thresh_idx + I;
+        dV{1, spike} = slope(thresh_idx:ahp_ind, 1);
+        Vm{1, spike} = trace_interp(thresh_idx:ahp_ind, 1);
     end
     
     %quantify the number of spikes for each depolarizing current pulse
@@ -147,6 +151,8 @@ if analyze == 1;
             curr_amp(1, counter) = max(data.RecTable.stimWave{manipulation, 1}.DA_3(:, quant_sweep));
             counter = counter + 1;
         else
+            spikes_quant(1, counter) = 0;
+            curr_amp(1, counter) = max(data.RecTable.stimWave{manipulation, 1}.DA_3(:, quant_sweep));
             quant_sweep = quant_sweep + 1;
         end
     end
