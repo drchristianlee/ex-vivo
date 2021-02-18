@@ -160,6 +160,13 @@ if analyze == 1;
     figure
     plot(curr_amp, spikes_quant);
     
+    %plot phase plot
+    figure
+    for plotter = 1:size(dV, 2);
+        plot(Vm{1, plotter}, dV{1, plotter});
+        hold on
+    end
+    
     
     result.Rin = Rin;
     result.V_mem = V_mem;
@@ -176,6 +183,8 @@ if analyze == 1;
     result.ahp_interp = ahp_interp;
     result.curr_amp = curr_amp;
     result.spikes_quant = spikes_quant;
+    result.Vm = Vm;
+    result.dV = dV;
     
     set(ax1,'TickDir','out')
     set(ax2,'TickDir','out')
