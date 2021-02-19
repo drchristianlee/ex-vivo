@@ -135,8 +135,8 @@ if analyze == 1;
         ahp_interp(1, spike) = threshold_interp(1, spike) - (min(trace_interp(thresh_idx:thresh_idx + 500, 1))); %might need to modify for spikes near end of pulse
         [ahp_hold, I] = min(trace_interp(thresh_idx:thresh_idx + 500, 1));
         ahp_ind = thresh_idx + I;
-        dV{1, spike} = slope(thresh_idx:ahp_ind, 1);
-        Vm{1, spike} = trace_interp(thresh_idx:ahp_ind, 1);
+        dV{1, spike} = slope((thresh_idx - 5000):(ahp_ind + 5000), 1);
+        Vm{1, spike} = trace_interp((thresh_idx - 5000):(ahp_ind + 5000), 1);
     end
     
     %quantify the number of spikes for each depolarizing current pulse
