@@ -145,14 +145,16 @@ if analyze == 1;
     for quant_sweep = 7:size(data.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
         finder = data.RecTable.dataRaw{manipulation,1}{1,1}(:, quant_sweep) > 0;
         decision = sum(finder);
-        if decision > 0;
+        if decision == 0;
+            spikes_quant(1, counter) = 0;
+            curr_amp(1, counter) = max(data.RecTable.stimWave{manipulation, 1}.DA_3(:, quant_sweep));
+            counter = counter + 1;
+            quant_sweep = quant_sweep + 1;
+        else
             [pks, locs, w, p] = findpeaks(data.RecTable.dataRaw{manipulation,1}{1,1}(:, quant_sweep), 'MinPeakHeight' , 0, 'MinPeakDistance', 5);
             spikes_quant(1, counter) = size(pks, 1);
             curr_amp(1, counter) = max(data.RecTable.stimWave{manipulation, 1}.DA_3(:, quant_sweep));
             counter = counter + 1;
-        else
-            spikes_quant(1, counter) = 0;
-            curr_amp(1, counter) = max(data.RecTable.stimWave{manipulation, 1}.DA_3(:, quant_sweep));
             quant_sweep = quant_sweep + 1;
         end
     end
