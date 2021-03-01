@@ -151,7 +151,7 @@ if analyze == 1;
             counter = counter + 1;
             quant_sweep = quant_sweep + 1;
         else
-            [pks, locs, w, p] = findpeaks(data.RecTable.dataRaw{manipulation,1}{1,1}(:, quant_sweep), 'MinPeakHeight' , 0, 'MinPeakDistance', 5);
+            [pks, locs, w, p] = findpeaks(data.RecTable.dataRaw{manipulation,1}{1,1}(:, quant_sweep), 'MinPeakHeight' , 20, 'MinPeakDistance', 5); %note min height 20
             spikes_quant(1, counter) = size(pks, 1);
             curr_amp(1, counter) = max(data.RecTable.stimWave{manipulation, 1}.DA_3(:, quant_sweep));
             counter = counter + 1;
