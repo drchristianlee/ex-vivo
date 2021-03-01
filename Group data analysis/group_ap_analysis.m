@@ -38,6 +38,17 @@ for step = 1:size(data, 2);
     results_by_neuron.amp_interp{1, step} = mean(data{1,step}.amp_interp, 2);
     results_by_neuron.width_interp{1, step} = mean(data{1,step}.width_interp, 2);
     results_by_neuron.ahp_interp{1, step} = mean(data{1,step}.ahp_interp, 2);
+    results_by_neuron.curr_amp{1, step} = data{1, step}.curr_amp;
+    results_by_neuron.spikes_quant{1, step} = data{1, step}.spikes_quant;
+end
+
+for validation_step2 = 1:size(results_by_neuron.curr_amp, 2);
+    if true == 1;
+        true = isequal(results_by_neuron.curr_amp{1, 1:end});
+        disp('Current pulse amplitudes validated');
+    else
+        disp('Current pulse mismatch');
+    end
 end
 
 group_results.Rin(1,1) = mean(cell2mat(results_by_neuron.Rin), 2);
@@ -60,3 +71,13 @@ group_results.width_interp(1,1) = mean(cell2mat(results_by_neuron.width_interp),
 group_results.width_interp(1,2) = (std(cell2mat(results_by_neuron.width_interp), 0, 2))/(sqrt(size(data, 2)));
 group_results.ahp_interp(1,1) = mean(cell2mat(results_by_neuron.ahp_interp), 2);
 group_results.ahp_interp(1,2) = (std(cell2mat(results_by_neuron.ahp_interp), 0, 2))/(sqrt(size(data, 2)));
+for accum = 1:size(data, 2);
+    curr_accum(accum, :) = results_by_neuron.curr_amp{1, accum};
+    spikes_accum(accum, :) = results_by_neuron.spikes_quant{1, accum};
+end
+group_results.curr = curr_accum(1, :);
+group_results.spikes(1, :) = mean(spikes_accum, 1);
+group_results.spikes(2, :) = (std(spikes_accum, 0, 1))/(sqrt(size(spikes_accum, 1)));
+
+%plot spikes vs current, then calculate average phase plots (be sure to
+%account for different lengths and use NaN possibly)
