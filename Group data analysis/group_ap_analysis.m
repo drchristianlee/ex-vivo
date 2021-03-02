@@ -81,3 +81,5 @@ group_results.spikes(2, :) = (std(spikes_accum, 0, 1))/(sqrt(size(spikes_accum, 
 
 %plot spikes vs current, then calculate average phase plots (be sure to
 %account for different lengths and use NaN possibly)
+figure
+shadedErrorBar(group_results.curr,group_results.spikes(1, :),group_results.spikes(2, :))
