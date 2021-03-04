@@ -82,3 +82,7 @@ group_results.spikes(2, :) = (std(spikes_accum, 0, 1))/(sqrt(size(spikes_accum, 
 figure
 shadedErrorBar(group_results.curr,group_results.spikes(1, :),group_results.spikes(2, :))
 
+for stepper = 1:size(data, 2);
+    for spike_step = 1:size(data{1, stepper}.Vm, 2);
+        spike_accum = 
+end
