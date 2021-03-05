@@ -85,9 +85,12 @@ shadedErrorBar(group_results.curr,group_results.spikes(1, :),group_results.spike
 for stepper = 1:size(data, 2);
     for spike_step = 1:size(data{1, stepper}.Vm, 2);
         for point_step = 1:size(data{1, stepper}.Vm{1, spike_step}, 1);
-        spike_accum(spike_step, point_step) = data{1, stepper}.Vm{1, spike_step}(point_step, 1);
-        spike_accum(spike_accum == 0) = NaN;
-        spike_average(:, stepper) = nanmean(spike_accum, 1);
+        spike_accum(point_step, spike_step) = data{1, stepper}.Vm{1, spike_step}(point_step, 1);
+        point_step = point_step + 1;
         end
+        spike_step = spike_step + 1;
     end
+    stepper = stepper + 1;
 end
+spike_average(:, stepper) = nanmean(spike_accum, 2);
+spike_accum(spike_accum == 0) = NaN;
