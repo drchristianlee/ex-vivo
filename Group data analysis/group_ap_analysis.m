@@ -1,4 +1,5 @@
 clear;
+close all
 
 data = load_mat_files;
 
@@ -85,12 +86,26 @@ shadedErrorBar(group_results.curr,group_results.spikes(1, :),group_results.spike
 for stepper = 1:size(data, 2);
     for spike_step = 1:size(data{1, stepper}.Vm, 2);
         for point_step = 1:size(data{1, stepper}.Vm{1, spike_step}, 1);
-        spike_accum(point_step, spike_step) = data{1, stepper}.Vm{1, spike_step}(point_step, 1);
+        Vm_accum(point_step, spike_step) = data{1, stepper}.Vm{1, spike_step}(point_step, 1);
+        dV_accum(point_step, spike_step) = data{1, stepper}.dV{1, spike_step}(point_step, 1);
         point_step = point_step + 1;
         end
         spike_step = spike_step + 1;
     end
+    Vm_accum(Vm_accum == 0) = NaN;
+    Vm_average(:, stepper) = mean(Vm_accum, 2, 'omitnan');
+    dV_accum(dV_accum == 0) = NaN;
+    dV_average(:, stepper) = mean(dV_accum, 2, 'omitnan');
     stepper = stepper + 1;
 end
-spike_average(:, stepper) = nanmean(spike_accum, 2);
-spike_accum(spike_accum == 0) = NaN;
+
+Vm_average(:, end + 1) = mean(Vm_average, 2);
+dV_average(:, end + 1) = mean(dV_average, 2);
+
+
+ figure
+    for plotter = 1:size(Vm_average, 2) - 1;
+        plot(Vm_average(:, plotter), dV_average(:, plotter), 'y');
+        hold on
+    end
+    plot(Vm_average(:, end), dV_accum(:, end), 'k');
