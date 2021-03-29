@@ -151,7 +151,7 @@ if analyze == 1;
             counter = counter + 1;
             quant_sweep = quant_sweep + 1;
         else
-            [pks, locs, w, p] = findpeaks(data.RecTable.dataRaw{manipulation,1}{1,1}(:, quant_sweep), 'MinPeakHeight' , 20, 'MinPeakDistance', 5); %note min height 20
+            [pks, locs, w, p] = findpeaks(data.RecTable.dataRaw{manipulation,1}{1,1}(:, quant_sweep), 'MinPeakHeight' , 0.02, 'MinPeakDistance', 5); %note min height 20
             spikes_quant(1, counter) = size(pks, 1);
             curr_amp(1, counter) = max(data.RecTable.stimWave{manipulation, 1}.DA_3(:, quant_sweep));
             counter = counter + 1;
@@ -208,7 +208,7 @@ elseif analyze == 2;
     avg_psp = nanmean(data.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
     
     figure
-    for sweep = 1:size(data.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
+    for sweep = 1:size(data.RecTable.dataRaw{manipulation, 1}{1,1}, 2)
         plot(time_vector(39200:41600) , data.RecTable.dataRaw{manipulation, 1}{1,1}(39200:41600, sweep), 'y');
         hold on
         plot(time_vector(39200:41600), avg_psp(39200:41600), 'k');
