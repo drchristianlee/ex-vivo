@@ -1,5 +1,0 @@
-Follow these steps for analyzing data from Heka
-
-1. Export heka data from patchmaster as matlab files
-2. run epsp_average_2 on the data, indicating the cell, manipulation any sweeps that should be excluded in the appropriate line
-3. run calculate_parameters on the data
