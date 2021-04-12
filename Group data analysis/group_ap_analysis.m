@@ -72,6 +72,8 @@ group_results.width_interp(1,1) = mean(cell2mat(results_by_neuron.width_interp),
 group_results.width_interp(1,2) = (std(cell2mat(results_by_neuron.width_interp), 0, 2))/(sqrt(size(data, 2)));
 group_results.ahp_interp(1,1) = mean(cell2mat(results_by_neuron.ahp_interp), 2);
 group_results.ahp_interp(1,2) = (std(cell2mat(results_by_neuron.ahp_interp), 0, 2))/(sqrt(size(data, 2)));
+group_results.number_cells = size(data, 2);
+
 for accum = 1:size(data, 2);
     curr_accum(accum, :) = results_by_neuron.curr_amp{1, accum};
     spikes_accum(accum, :) = results_by_neuron.spikes_quant{1, accum};
@@ -82,6 +84,12 @@ group_results.spikes(2, :) = (std(spikes_accum, 0, 1))/(sqrt(size(spikes_accum, 
 
 figure
 shadedErrorBar(group_results.curr,group_results.spikes(1, :),group_results.spikes(2, :))
+set(gca,'TickDir','out')
+set(gca, 'box', 'off')
+set(gcf,'position',[680 558 160 210])
+set(gca, 'TickLength', [0.025 0.025]);
+set(gca,'FontSize',9);
+ 
 
 for stepper = 1:size(data, 2);
     for spike_step = 1:size(data{1, stepper}.Vm, 2);
