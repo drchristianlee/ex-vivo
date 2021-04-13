@@ -176,7 +176,6 @@ if analyze == 1;
     result.amp = amp;
     result.width = half_width;
     result.ahp = ahp;
-    result.curr = curr_amp
     result.sweep = meas_sweep;
     result.nan = NaNtrace;
     result.threshold_interp = threshold_interp;
