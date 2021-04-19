@@ -30,6 +30,18 @@ if sav_result == 1;
 else
 end
 
+if analyze == 1;
+result.HoldingCurr = HoldingCurr{manipulation, 1}(meas_sweep, 1);
+else
+    result.HoldingCurr = HoldingCurr{manipulation, 1}(1, 1);
+    test_array = all(HoldingCurr{manipulation, 1}(1:end, 1) == HoldingCurr{manipulation, 1}(1, 1));
+    if test_array ~= 1; 
+        disp('the holding current changes during the recording')
+    else
+    end
+end
+    
+
 for protocols = 1:size(data.RecTable, 1);
     if data.RecTable{protocols, 1} == cell;
         break
