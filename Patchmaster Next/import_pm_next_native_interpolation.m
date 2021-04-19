@@ -47,6 +47,23 @@ if isempty(NaNtrace) == 0;
 else
 end
 
+%extracts holding currents from data
+ii = 1;
+for i = 1:size(data.trees.dataTree, 1);
+    if isfield(data.trees.dataTree{i, 5}, 'TrTrHolding') ~= 0;
+        CurrExtractor(ii, 1) = data.trees.dataTree{i, 5}.TrTrHolding;
+        ii = ii + 1;
+    else
+    end
+end
+start = 1;
+for recording = 1:size(data.RecTable, 1);
+    traces = table2array(data.RecTable(recording, 6));
+    fin = start + traces - 1;
+    HoldingCurr{recording, 1} = CurrExtractor(start:fin, 1);
+        start = start + traces;
+end
+
 if analyze == 1;
     time_vector = 0:0.05:899.995; %hard coded at the present
     
@@ -59,6 +76,7 @@ if analyze == 1;
         plot(time_vector , data.RecTable.stimWave{manipulation, 1}.DA_3(:, sweep));
         hold on
         axis([0 900 -2 2])
+        set(gcf, 'renderer' , 'Painters');
     end
     
     %code to find resting membrane potential
@@ -212,7 +230,7 @@ elseif analyze == 2;
         hold on
         plot(time_vector(39200:41600), avg_psp(39200:41600), 'k');
         %axis tight
-        axis([1960 2080 -0.080 -0.072])
+        axis([1960 2080 -0.09 -0.07])
     end
     
     psp_base = nanmean(avg_psp(39400:39800));
