@@ -1,4 +1,4 @@
-# ex-vivo
+# ex-vivo analysis scripts
 A repository of various scripts to read and analyze ex vivo whole cell recording data. 
 
 ## Dependencies 
@@ -14,6 +14,10 @@ HEKA_Patchmaster_Importer
 *Repositories from Github user raacampbell*
 
 shadedErrorBar
+
+## Measurements
+
+These scripts can be used to measure action potential parameters as well as postsynaptic potential parameters. An easy to use gui collects user input to run the analysis desired. The most recent scripts run on data stored by Patchmaster Next (https://www.heka.com/downloads/downloads_main.html#down_patchmaster_next). To analyze this type of data, begin by running *analysis.mat* in the folder named Patchmaster Next. 
 
 ## Results
 
