@@ -17,7 +17,7 @@ shadedErrorBar
 
 ## Measurements
 
-These scripts can be used to measure action potential parameters as well as postsynaptic potential parameters. An easy to use gui collects user input to run the analysis desired. The most recent scripts run on data stored by Patchmaster Next (https://www.heka.com/downloads/downloads_main.html#down_patchmaster_next). To analyze this type of data, begin by running *analysis.mat* in the folder named Patchmaster Next. 
+These scripts can be used to measure action potential parameters as well as postsynaptic potential parameters. An easy to use gui collects user input to run the analysis desired. The most recent scripts run on data stored by Patchmaster Next (https://www.heka.com/downloads/downloads_main.html#down_patchmaster_next). To analyze this type of data, begin by running *analysis.mat* in the folder named Patchmaster Next. Deprecated code and scripts for previous Patchmaster versions are included but not supported. 
 
 ## Results
 
