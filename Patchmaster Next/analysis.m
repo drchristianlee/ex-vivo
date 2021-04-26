@@ -15,7 +15,7 @@ if analyze == 1;
     meas_sweep = str2num(cell2mat(inputdlg('Please enter the sweep for action potential analysis; start with 10 and work backward')));
 else
 end
-NaNtrace = str2num(cell2mat(inputdlg('Please enter any sweeps to change to NaN or else leave empty')));
+NaNtrace = str2num(cell2mat(inputdlg('Please enter any sweeps to change to NaN or else leave empty'))); %enter sweeps separated by space
 sav_result = str2num(cell2mat(inputdlg('Save data? 1 for yes')))
 
 data = HEKA_Importer.GUI %runs importer
@@ -41,7 +41,8 @@ manipulation = (manipulation - 1) + protocols;
 
 if isempty(NaNtrace) == 0;
     for correctval = 1:size(NaNtrace, 2);
-        data.RecTable.dataRaw{manipulation, 1}{1,1}(1:end, NaNtrace(1,correctval)) = NaN;
+        data.RecTable.dataRaw{manipulation, 1}{1,1}(1:end, NaNtrace(1, correctval)) = NaN;
+        data.RecTable.stimWave{manipulation, 1}.DA_3(1:end, NaNtrace(1, correctval)) = NaN;
     end
 else
 end
