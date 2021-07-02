@@ -17,6 +17,11 @@ else
 end
 NaNtrace = str2num(cell2mat(inputdlg('Please enter any sweeps to change to NaN or else leave empty'))); %enter sweeps separated by space
 sav_result = str2num(cell2mat(inputdlg('Save data? 1 for yes')))
+indiv = str2num(cell2mat(inputdlg('plot individual traces? (1) for yes (2) for no')));
+if indiv == 1;
+    plot_sweeps = str2num(cell2mat(inputdlg('Please enter sweeps to plot')));
+else
+end
 
 data = HEKA_Importer.GUI %runs importer
 
@@ -241,7 +246,16 @@ elseif analyze == 2;
         hold on
         plot(time_vector(39200:41600), avg_psp(39200:41600), 'k');
         %axis tight
-        axis([1960 2080 -0.09 -0.07])
+        axis([1960 2080 -0.09 -0.05]) %last value was -0.07
+    end
+    
+    if indiv == 1;
+        for plot_step = 1:size(plot_sweeps, 2);
+            figure
+            plot(time_vector(39200:41600) , data.RecTable.dataRaw{manipulation, 1}{1,1}(39200:41600, plot_sweeps(1, plot_step)), 'k');
+            %axis tight
+            axis([1960 2080 -0.09 -0.05]) %last value was -0.07
+        end
     end
     
     psp_base = nanmean(avg_psp(39400:39800));
