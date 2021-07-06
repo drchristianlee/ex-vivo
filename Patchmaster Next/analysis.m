@@ -81,7 +81,11 @@ else
 end
 
 if analyze == 1;
-    time_vector = 0:0.05:899.995; %hard coded at the present
+    %time_vector = 0:0.05:899.995; %hard coded time vector, replaced with
+    %dynamic code below
+    point_val = (1/data.RecTable.SR(manipulation, 1)) * 1000;%gets point value in milliseconds from sampling rate
+    final_val = (point_val * size(data.RecTable.dataRaw{manipulation, 1}{1, 1})) - point_val;
+    time_vector = 0:point_val:final_val;
     
     for sweep = 1:size(data.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
         ax1 = subplot(2,1,1);
@@ -92,8 +96,13 @@ if analyze == 1;
         plot(time_vector , data.RecTable.stimWave{manipulation, 1}.DA_3(:, sweep));
         hold on
         axis([0 900 -2 2])
-        set(gcf, 'renderer' , 'Painters');
     end
+    
+    set(gcf, 'renderer' , 'Painters');
+    xlabel(ax1, 'ms')
+    xlabel(ax2, 'ms')
+    ylabel(ax1, 'V')
+    ylabel(ax2, 'nA')
     
     %code to find resting membrane potential
     Vtrace = data.RecTable.dataRaw{manipulation, 1}{1,1}(1000:2999, :);
@@ -155,7 +164,7 @@ if analyze == 1;
         max_rise_slope = max(slope(locs(spike, 1) - 250: locs(spike, 1) + 250));
         perc_max = max_rise_slope * 0.15;
         for thresh_idx = locs(spike, 1) - 250: locs(spike, 1) + 250
-            if slope(thresh_idx, 1) > perc_max;
+            if slope(thresh_idx, 1) > perc_max
                 break
             else
             end
@@ -236,11 +245,16 @@ if analyze == 1;
     % print -painters -depsc output.eps
 elseif analyze == 2;
     
-    time_vector = 0:0.05:6002.45; %hard coded at the present
+    %time_vector = 0:0.05:6002.45; % original hard coded time vector
+    %replaced by dynamic calculation below
+    point_val = (1/data.RecTable.SR(manipulation, 1)) * 1000;%gets point value in milliseconds from sampling rate
+    final_val = (point_val * size(data.RecTable.dataRaw{manipulation, 1}{1, 1})) - point_val;
+    time_vector = 0:point_val:final_val;
     
     avg_psp = nanmean(data.RecTable.dataRaw{manipulation, 1}{1,1}, 2);
     
     figure
+    
     for sweep = 1:size(data.RecTable.dataRaw{manipulation, 1}{1,1}, 2)
         plot(time_vector(39200:41600) , data.RecTable.dataRaw{manipulation, 1}{1,1}(39200:41600, sweep), 'y');
         hold on
@@ -248,6 +262,10 @@ elseif analyze == 2;
         %axis tight
         axis([1960 2080 -0.09 -0.05]) %last value was -0.07
     end
+    
+    ax3 = gca
+    xlabel(ax3, 'ms')
+    ylabel(ax3, 'V')
     
     if indiv == 1;
         for plot_step = 1:size(plot_sweeps, 2);
